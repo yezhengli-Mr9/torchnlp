@@ -148,24 +148,19 @@ class Decoder(nn.Module):
         
         self.embedding_proj = nn.Linear(embedding_size, hidden_size, bias=False)
         self.dec = nn.Sequential(*[DecoderLayer(*params) for l in range(num_layers)])
-        
+
         self.layer_norm = LayerNorm(hidden_size)
         self.input_dropout = nn.Dropout(input_dropout)
-        
     
     def forward(self, inputs, encoder_output):
         #Add input dropout
         x = self.input_dropout(inputs)
-        
         # Project to hidden size
         x = self.embedding_proj(x)
-        
         # Add timing signal
         x += self.timing_signal[:, :inputs.shape[1], :].type_as(inputs.data)
-        
         # Run decoder
         y, _ = self.dec((x, encoder_output))
-        
         # Final layer normalization
         y = self.layer_norm(y)
         return y
