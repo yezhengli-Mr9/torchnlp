@@ -93,16 +93,13 @@ class Encoder(nn.Module):
         self.input_dropout = nn.Dropout(input_dropout)
         
     
-    def forward(self, inputs):
-        #Add input dropout
-        x = self.input_dropout(inputs)
-        
+    def forward(self, inputs):# [tasks/sequence_tagging/main.py def compute(]# Combine embeddings inputs_word_emb = torch.cat([inputs_word_emb, inputs_emb_char], -1)
+       #Add input dropout
+        x = self.input_dropout(inputs)        
         # Project to hidden size
         x = self.embedding_proj(x)
-        
         # Add timing signal
         x += self.timing_signal[:, :inputs.shape[1], :].type_as(inputs.data)
-        
         y = self.enc(x)
         
         y = self.layer_norm(y)

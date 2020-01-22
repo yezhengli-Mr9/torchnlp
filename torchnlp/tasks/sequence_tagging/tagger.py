@@ -36,7 +36,6 @@ class Tagger(Model):
             and with word_vocab.vectors make it non-trainable
         """
         super(Tagger, self).__init__(hparams)
-
         if vocabs is None or not isinstance(vocabs, tuple) or len(vocabs) != 3:
             raise ValueError('Must provide vocabs 3-tuple')
 
