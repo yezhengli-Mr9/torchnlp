@@ -63,7 +63,7 @@ class TransformerTagger(Tagger):
 
         if inputs_char_emb is not None:
             seq_len = inputs_word_emb.shape[1]
-
+            print("[transformer_tagger compute] inputs_emb_char", inputs_emb_char.size())
             # Process character embeddings to get per word embeddings
             inputs_char_emb = self.transformer_char(inputs_char_emb)
 
@@ -72,7 +72,7 @@ class TransformerTagger(Tagger):
             mask = F.softmax(mask, dim=-1)
             inputs_emb_char = (torch.matmul(mask.permute(0, 2, 1), inputs_char_emb).contiguous()
                             .view(-1, seq_len, self.hparams.embedding_size_char_per_word))
-            print("[transformer_tagger compute] inputs_emb_char", inputs_emb_char.size())
+            
             # Combine embeddings
             inputs_word_emb = torch.cat([inputs_word_emb, inputs_emb_char], -1)
             print("[transformer_tagger compute] inputs_word_emb",inputs_word_emb.size() )
