@@ -63,7 +63,7 @@ class TransformerTagger(Tagger):
 
         if inputs_char_emb is not None:
             seq_len = inputs_word_emb.shape[1]
-            print("[transformer_tagger compute] inputs_emb_char", inputs_emb_char.size())
+            print("[transformer_tagger compute] inputs_char_emb", inputs_char_emb.size())
             # Process character embeddings to get per word embeddings
             inputs_char_emb = self.transformer_char(inputs_char_emb)
 
