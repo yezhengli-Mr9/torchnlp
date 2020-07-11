@@ -107,10 +107,8 @@ class MultiHeadAttention(nn.Module):
         # Merge heads
         contexts = self._merge_heads(contexts)
         #contexts = torch.tanh(contexts)
-        
         # Linear to get output
         outputs = self.output_linear(contexts)
-        
         return outputs
 
 class Conv(nn.Module):

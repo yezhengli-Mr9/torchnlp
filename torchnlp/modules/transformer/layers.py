@@ -47,25 +47,18 @@ class EncoderLayer(nn.Module):
         
     def forward(self, inputs):
         x = inputs
-        
         # Layer Normalization
         x_norm = self.layer_norm_mha(x)
-        
         # Multi-head attention
         y = self.multi_head_attention(x_norm, x_norm, x_norm)
-        
         # Dropout and residual
         x = self.dropout(x + y)
-        
         # Layer Normalization
         x_norm = self.layer_norm_ffn(x)
-        
         # Positionwise Feedforward
         y = self.positionwise_feed_forward(x_norm)
-        
         # Dropout and residual
         y = self.dropout(x + y)
-        
         return y
 
 class DecoderLayer(nn.Module):
